@@ -9,3 +9,14 @@ fs -rm -f -r output;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+u = LOAD './data.tsv' USING PigStorage('\t') AS (f1:CHARARRAY, f2:CHARARRAY, f3:INT);
+DUMP u;
+
+s = GROUP u BY f1;
+DUMP s;
+
+t = FOREACH s GENERATE group, COUNT(u);
+DUMP t;
+
+
+STORE t INTO 'output';

@@ -29,3 +29,11 @@ u = LOAD 'data.csv' USING PigStorage(',')
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
 
+
+R1 = FILTER u BY $4 MATCHES 'blue|green';
+R2 = FOREACH R1 GENERATE $1,$4;
+DUMP R2;
+
+STORE R2 INTO 'output' USING PigStorage('\t');
+
+fs -copyToLocal output output
